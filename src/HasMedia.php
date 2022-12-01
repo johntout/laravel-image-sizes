@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 
 trait HasMedia
 {
-    private string $imageName;
+    public string $generatedImageName;
 
     public string $uploadError;
 
@@ -106,7 +106,7 @@ trait HasMedia
     public function generateImageName(UploadedFile $image): void
     {
         $imageName = preg_replace('/\s+/', '', $image->getClientOriginalName());
-        $this->imageName = Str::of($imageName)->replace($image->getClientOriginalExtension(), 'webp');
+        $this->generatedImageName = Str::of($imageName)->replace($image->getClientOriginalExtension(), 'webp');
     }
 
     /**
@@ -143,7 +143,7 @@ trait HasMedia
                 );
             }
 
-            $this->setAttribute($this->objectImageField(), $this->imageName);
+            $this->setAttribute($this->objectImageField(), $this->generatedImageName);
             $this->save();
 
             $uploaded = true;
@@ -188,15 +188,15 @@ trait HasMedia
     {
         $this->checkLocalDiskExists();
 
-        if (empty($this->imageName)) {
+        if (empty($this->generatedImageName)) {
             $this->generateImageName($image);
         }
 
         $localUniqueDirectory = Uuid::uuid4().now()->timestamp;
         $localSizeDirectory = $localUniqueDirectory.'/'.$this->getObjectId().'/images/'.$size;
 
-        $image->storeAs($localSizeDirectory, $this->imageName, ['disk' => 'local']);
-        $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->imageName;
+        $image->storeAs($localSizeDirectory, $this->generatedImageName, ['disk' => 'local']);
+        $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
 
         if (isset($options['size'])) {
             Image::make($imagePath)
@@ -210,10 +210,10 @@ trait HasMedia
             Image::make($imagePath)->encode(config('image-sizes.encode'));
         }
 
-        $image = new UploadedFile(path: $imagePath, originalName: $this->imageName);
+        $image = new UploadedFile(path: $imagePath, originalName: $this->generatedImageName);
 
         $image->storeAs(
-            $this->getObjectId().'/images/'.$size, $this->imageName,
+            $this->getObjectId().'/images/'.$size, $this->generatedImageName,
             ['disk' => $this->objectMediaDisk()]
         );
 
