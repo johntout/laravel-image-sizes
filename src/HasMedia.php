@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Ramsey\Uuid\Uuid;
 
 trait HasMedia
 {
@@ -191,22 +192,22 @@ trait HasMedia
             $this->generateImageName($image);
         }
 
-        $timestamp = now()->timestamp;
-        $localDirectory = $timestamp.'/'.$this->getObjectId().'/images/'.$size;
-        $image->storeAs($localDirectory, $this->imageName, ['disk' => 'local']);
-        $imagePath = Storage::disk('local')->path($localDirectory).'/'.$this->imageName;
-        $encode = config('image-sizes.encode');
+        $localUniqueDirectory = Uuid::uuid4().now()->timestamp;
+        $localSizeDirectory = $localUniqueDirectory.'/'.$this->getObjectId().'/images/'.$size;
+
+        $image->storeAs($localSizeDirectory, $this->imageName, ['disk' => 'local']);
+        $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->imageName;
 
         if (isset($options['size'])) {
             Image::make($imagePath)
-                ->encode($encode)
+                ->encode(config('image-sizes.encode'))
                 ->resize($options['size']['width'], $options['size']['height'], function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
                 ->save();
         } else {
-            Image::make($imagePath)->encode($encode);
+            Image::make($imagePath)->encode(config('image-sizes.encode'));
         }
 
         $image = new UploadedFile(path: $imagePath, originalName: $this->imageName);
@@ -216,7 +217,7 @@ trait HasMedia
             ['disk' => $this->objectMediaDisk()]
         );
 
-        Storage::disk('local')->deleteDirectory($timestamp);
+        Storage::disk('local')->deleteDirectory($localUniqueDirectory);
     }
 
     /**
