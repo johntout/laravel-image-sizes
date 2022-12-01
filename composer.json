@@ -1,0 +1,29 @@
+{
+	"name": "johntout/laravel-image-sizes",
+	"description": "Laravel Image Sizes Package",
+	"keywords": ["laravel"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "John Toutoulis",
+			"email": "john.toutoulis@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"JohnTout\\LaravelImageSizes\\": "src"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"JohnTout\\LaravelImageSizes\\LaravelImageSizesServiceProvider"
+			]
+		}
+	},
+	"require": {
+		"php": "^8.0",
+		"laravel": "^9.0",
+		"intervention/image": "^2.7"
+	}
+}
