@@ -1,6 +1,8 @@
 # Laravel Image Sizes
 A Laravel package to store images in different sizes. There are also options for various video provider urls.
 
+This package was created for a personal project and I publish it in case anyone has the same needs. Cheers :)
+
 ## Installation ##
 
 ### Step 1: Install johntout/laravel-image-sizes with composer:
