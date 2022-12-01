@@ -177,10 +177,13 @@ trait HasMedia
     }
 
     /**
-     * @throws Exception
+     * @param UploadedFile $image
+     * @param string $size
+     * @param array $options
      * @return void
+     * @throws Exception
      */
-    private function optimizeAndUploadImage(UploadedFile $image, string $size, array $options): void
+    public function optimizeAndUploadImage(UploadedFile $image, string $size, array $options): void
     {
         $this->checkLocalDiskExists();
 
