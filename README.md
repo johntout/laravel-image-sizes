@@ -5,8 +5,8 @@ This package was created for a personal project and I publish it in case anyone 
 
 ## Requirements ##
 ```
-PHP 8
-Laravel 9
+PHP 8+
+Laravel 9+
 ```
 
 ## Installation ##
