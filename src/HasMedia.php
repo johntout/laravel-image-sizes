@@ -239,9 +239,9 @@ trait HasMedia
      */
     public function stripVideoProviderTags(string $video, string $provider): ?string
     {
-        $stripped = str_replace('{'.$provider.'}', '', $video);
-
-        return str_replace('{/'.$provider.'}', '', $stripped);
+        return Str::of($video)
+            ->replace('{'.$provider.'}', '')
+            ->replace('{/'.$provider.'}', '');
     }
 
     /**
