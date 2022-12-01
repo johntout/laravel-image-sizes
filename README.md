@@ -14,7 +14,7 @@ The package is using intervention/image package for image manipulation. Before u
 ### Step 2: Publish config file
 
 ```
-php artisan vendor:publish --tag="laravel-image-sizes-config"
+php artisan vendor:publish --provider="JohnTout\LaravelImageSizes\LaravelImageSizesServiceProvider"
 ```
 
 If you want to use Twitch video provider to embed player to your app, add this to your .env file.
