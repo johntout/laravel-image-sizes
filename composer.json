@@ -23,7 +23,6 @@
 	},
 	"require": {
 		"php": "^8.0",
-		"laravel": "^9.0",
 		"intervention/image": "^2.7"
 	}
 }
