@@ -15,7 +15,6 @@ class LaravelImageSizesServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/image-sizes.php' => config_path('image-sizes.php'),
-            'laravel-image-sizes-config'
-        ]);
+        ], 'laravel-image-sizes-config');
     }
 }
