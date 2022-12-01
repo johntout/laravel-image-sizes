@@ -5,7 +5,7 @@ return [
     'image_field' => 'image',
     'video_field' => 'video',
     'filesystem_disk' => 'local',
-    'image_sizes' => [
+    'sizes' => [
         'originalImage' => [],
         'bigImage' => [
             'size' => [

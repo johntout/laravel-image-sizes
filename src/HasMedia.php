@@ -29,7 +29,7 @@ trait HasMedia
      */
     public function objectImageField(): string
     {
-        return $this->image_field ?? config('image-sizes-video-providers.image_field');
+        return $this->image_field ?? config('image-sizes.image_field');
     }
 
     /**
@@ -37,7 +37,7 @@ trait HasMedia
      */
     public function objectVideoField(): string
     {
-        return $this->video_field ?? config('image-sizes-video-providers.video_field');
+        return $this->video_field ?? config('image-sizes.video_field');
     }
 
     /**
@@ -45,7 +45,7 @@ trait HasMedia
      */
     public function objectMediaDisk(): string
     {
-        return $this->filesystem_disk ?? config('image-sizes-video-providers.filesystem_disk');
+        return $this->filesystem_disk ?? config('image-sizes.filesystem_disk');
     }
 
     /**
@@ -123,7 +123,7 @@ trait HasMedia
         try {
             $this->generateImageName($image);
 
-            $imageSizes = config('image-sizes-video-providers.image_sizes');
+            $imageSizes = config('image-sizes.sizes');
 
             if (! in_array('*', $sizes)) {
                 $filtered = collect($imageSizes)
@@ -192,7 +192,7 @@ trait HasMedia
         $localDirectory = $timestamp.'/'.$this->getObjectId().'/images/'.$size;
         $image->storeAs($localDirectory, $this->imageName, ['disk' => 'local']);
         $imagePath = Storage::disk('local')->path($localDirectory).'/'.$this->imageName;
-        $encode = config('image-sizes-video-providers.encode');
+        $encode = config('image-sizes.encode');
 
         if (isset($options['size'])) {
             Image::make($imagePath)
@@ -257,7 +257,7 @@ trait HasMedia
 
         $provider = null;
 
-        foreach (config('image-sizes-video-providers.video_providers') as $videoProvider) {
+        foreach (config('image-sizes.video_providers') as $videoProvider) {
             if (Str::of($video)->containsAll([
                 '{'.$videoProvider.'}',
                 '{/'.$videoProvider.'}',
@@ -293,7 +293,7 @@ trait HasMedia
             return null;
         }
 
-        $providerUrl = config('image-sizes-video-providers.video_providers_urls')[$videoProvider];
+        $providerUrl = config('image-sizes.video_providers_urls')[$videoProvider];
         $videoId = $this->stripVideoProviderTags($this->getObjectVideo(), (string) $videoProvider);
 
         return Str::of($providerUrl)->replace('{video}', $videoId);
@@ -308,7 +308,7 @@ trait HasMedia
         $image = $this->getObjectImage();
 
         if (! $image) {
-            return config('image-sizes-video-providers.preview_image_url');
+            return config('image-sizes.preview_image_url');
         }
 
         return Storage::disk($this->objectMediaDisk())
