@@ -293,7 +293,7 @@ trait HasMedia
     {
         $videoProvider = $this->videoProvider();
 
-        if ($videoProvider == 'HTML') {
+        if ($videoProvider == 'HTML' || empty($videoProvider)) {
             return null;
         }
 
