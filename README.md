@@ -40,11 +40,24 @@ package uses Laravel's filesystem. The different sizes of the images are defined
 class User extends Model 
 {
     use JohnTout\LaravelImageSizes\HasMedia;
-
+    
+    /**
+     * @return Attribute
+     */
     public function filesystemDisk(): Attribute
     {
         return Attribute::make(
             get: fn () => 'avatars'
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    public function imageField(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => 'avatar'
         );
     }
 }
