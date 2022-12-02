@@ -304,7 +304,8 @@ trait HasMedia
     }
 
     /**
-     * @param  string  $size
+     * @param string $size
+     * @param null $default
      * @return string|null
      */
     public function imageUrl(string $size = 'originalImage', $default = null): ?string
@@ -321,5 +322,11 @@ trait HasMedia
 
         return Storage::disk($this->objectMediaDisk())
             ->url($this->getObjectId().'/images/'.$size.'/'.$image);
+    }
+
+    public function imageExists(string $size = 'originalImage'): bool
+    {
+        return Storage::disk($this->objectMediaDisk())
+            ->exists($this->getObjectId().'/images/'.$size.'/'.$this->getObjectImage());
     }
 }
