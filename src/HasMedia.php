@@ -12,9 +12,9 @@ use Ramsey\Uuid\Uuid;
 
 trait HasMedia
 {
-    public string $generatedImageName;
+    public string|null $generatedImageName = null;
 
-    public string $uploadError;
+    public string|null $uploadError = null;
 
     public function objectId(): string
     {
