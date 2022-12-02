@@ -41,6 +41,12 @@ class User extends Model
 {
     use JohnTout\LaravelImageSizes\HasMedia;
     
+    public filesystem_disk = 'avatars';
+    
+    public image_field = 'avatar';
+    
+    // OR
+    
     /**
      * @return Attribute
      */
