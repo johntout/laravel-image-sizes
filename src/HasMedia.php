@@ -307,12 +307,16 @@ trait HasMedia
      * @param  string  $size
      * @return string|null
      */
-    public function imageUrl(string $size = 'originalImage'): ?string
+    public function imageUrl(string $size = 'originalImage', $default = null): ?string
     {
         $image = $this->getObjectImage();
 
+        if (is_null($default)) {
+            $default = config('image-sizes.preview_image_url');
+        }
+
         if (! $image) {
-            return config('image-sizes.preview_image_url');
+            return $default;
         }
 
         return Storage::disk($this->objectMediaDisk())
