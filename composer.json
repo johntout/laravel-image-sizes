@@ -23,7 +23,7 @@
 	},
 	"require": {
 		"php": "^8.0",
-		"laravel/framework": "^9.19",
+		"laravel/framework": ">=9.0",
 		"intervention/image": "^2.7"
 	}
 }
