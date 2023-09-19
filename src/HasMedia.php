@@ -198,6 +198,10 @@ trait HasMedia
         $image->storeAs($localSizeDirectory, $this->generatedImageName, ['disk' => 'local']);
         $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
 
+        if (isset($options['type'])) {
+            $imagePath = Str::of($imagePath)->replaceLast('.webp', $options['type'])->value();
+        }
+
         if (isset($options['size'])) {
             Image::make($imagePath)
                 ->encode(config('image-sizes.encode'))
