@@ -198,10 +198,6 @@ trait HasMedia
         $image->storeAs($localSizeDirectory, $this->generatedImageName, ['disk' => 'local']);
         $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
 
-        if (isset($options['type'])) {
-            $imagePath = Str::of($imagePath)->replace('.webp', '.'.$options['type'])->value();
-        }
-
         if (isset($options['size'])) {
             Image::make($imagePath)
                 ->encode(config('image-sizes.encode'))
@@ -322,12 +318,6 @@ trait HasMedia
 
         if (! $image) {
             return $default;
-        }
-
-        $sizes = config('image-sizes.sizes');
-
-        if (isset($sizes[$size]['type'])) {
-            $image = Str::of($image)->replace('.webp', '.'.$sizes[$size]['type'])->value();
         }
 
         return Storage::disk($this->objectMediaDisk())
