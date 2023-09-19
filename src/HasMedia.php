@@ -324,6 +324,12 @@ trait HasMedia
             return $default;
         }
 
+        $sizes = config('image-sizes.sizes');
+
+        if (isset($sizes[$size]['type'])) {
+            $image = Str::of($image)->replace('.webp', '.'.$sizes[$size]['type'])->value();
+        }
+
         return Storage::disk($this->objectMediaDisk())
             ->url($this->getObjectId().'/images/'.$size.'/'.$image);
     }
