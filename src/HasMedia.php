@@ -199,7 +199,7 @@ trait HasMedia
         $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
 
         if (isset($options['type'])) {
-            $imagePath = Str::of($imagePath)->replaceLast('.webp', $options['type'])->value();
+            $imagePath = Str::of($imagePath)->replace('.webp', '.'.$options['type'])->value();
         }
 
         if (isset($options['size'])) {
