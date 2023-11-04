@@ -167,7 +167,7 @@ trait HasMedia
         $deleted = false;
         $disk = $this->objectMediaDisk();
 
-        if (Storage::disk($disk)->exists($this->getObjectId())) {
+        if (Storage::disk($disk)->exists($this->getObjectId().'/images')) {
             $deleted = Storage::disk($disk)->deleteDirectory($this->getObjectId().'/images');
         }
 
