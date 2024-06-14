@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 use Ramsey\Uuid\Uuid;
 
 trait HasMedia
@@ -199,7 +199,7 @@ trait HasMedia
         $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
 
         if (isset($options['size'])) {
-            Image::make($imagePath)
+            Image::read($imagePath)
                 ->encode(config('image-sizes.encode'))
                 ->resize($options['size']['width'], $options['size']['height'], function ($constraint) {
                     $constraint->aspectRatio();
