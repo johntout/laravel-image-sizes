@@ -200,14 +200,13 @@ trait HasMedia
 
         if (isset($options['size'])) {
             Image::read($imagePath)
+                ->resize($options['size']['width'], $options['size']['height'])
                 ->encode(config('image-sizes.encode'))
-                ->resize($options['size']['width'], $options['size']['height'], function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->save();
+                ->save($imagePath);
         } else {
-            Image::make($imagePath)->encode(config('image-sizes.encode'));
+            Image::read($imagePath)
+                ->encode(config('image-sizes.encode'))
+                ->save($imagePath);
         }
 
         $image = new UploadedFile(path: $imagePath, originalName: $this->generatedImageName);
