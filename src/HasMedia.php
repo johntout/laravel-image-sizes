@@ -197,15 +197,16 @@ trait HasMedia
 
         $image->storeAs($localSizeDirectory, $this->generatedImageName, ['disk' => 'local']);
         $imagePath = Storage::disk('local')->path($localSizeDirectory).'/'.$this->generatedImageName;
+        $encoder = config('image-sizes.encode');
 
         if (isset($options['size'])) {
             Image::read($imagePath)
                 ->resize($options['size']['width'], $options['size']['height'])
-                ->encode(config('image-sizes.encode'))
+                ->encode(new $encoder)
                 ->save($imagePath);
         } else {
             Image::read($imagePath)
-                ->encode(config('image-sizes.encode'))
+                ->encode(new $encoder)
                 ->save($imagePath);
         }
 

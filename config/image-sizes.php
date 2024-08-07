@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'encode' => new \Intervention\Image\Drivers\Imagick\Encoders\WebpEncoder(),
+    'encode' => \Intervention\Image\Drivers\Imagick\Encoders\WebpEncoder::class,
     'image_field' => 'image',
     'video_field' => 'video',
     'filesystem_disk' => 'local',
