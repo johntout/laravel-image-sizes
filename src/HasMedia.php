@@ -201,7 +201,7 @@ trait HasMedia
 
         if (isset($options['size'])) {
             Image::read($imagePath)
-                ->resize($options['size']['width'], $options['size']['height'])
+                ->scale($options['size']['width'], $options['size']['height'])
                 ->encode(new $encoder)
                 ->save($imagePath);
         } else {
